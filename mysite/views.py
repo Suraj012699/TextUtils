@@ -50,17 +50,17 @@ def services(request):
 def analyze(request):
 
     # get the text
-    djtext = request.GET.get('text','default')
+    djtext = request.POST.get('text','default')
     #  check the checkbox value
-    removepunc = request.GET.get('services', 'off')
-    caps = request.GET.get('caps', 'off')
-    nlr = request.GET.get('nlr', 'off')
-    esr = request.GET.get('esr','off')
-    cc = request.GET.get('cc', 'off')
+    removepunc = request.POST.get('services', 'off')
+    caps = request.POST.get('caps', 'off')
+    nlr = request.POST.get('nlr', 'off')
+    esr = request.POST.get('esr','off')
+    cc = request.POST.get('cc', 'off')
     # check value is on
     if removepunc == "on":
         # analyzed= djtext
-        punctuations = ''' !()-[]{};:'"\,<>./?@#$^&*~_ '''
+        punctuations = '''!()-[]{};:'"\,<>./?@#$^&*~_'''
         analyzed= ""
         for char in djtext:
             if char not in punctuations:
@@ -94,7 +94,8 @@ def analyze(request):
 
 
     if (cc=="on"):
-        count = ("Length of statement is :-"+str(len(djtext)))
+
+        count = (djtext+ "\n Length of statement is :-"+str(len(djtext)))
         params = {'purpose':'Count Characters', 'analyzed_text':count}
 
     if (removepunc == "off" and caps == "off" and nlr == "off" and esr == "off" and cc == "off"):
